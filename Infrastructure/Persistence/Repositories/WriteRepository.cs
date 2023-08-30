@@ -8,9 +8,9 @@ namespace Persistence.Repositories;
 
 public class WriteRepository<T> : IWriteRepository<T> where T: BaseEntity
 {
-    private readonly ApplicationDbContext _context;
+    private readonly AppDbContext _context;
 
-    public WriteRepository(ApplicationDbContext context)
+    public WriteRepository(AppDbContext context)
     {
         _context = context;
     }

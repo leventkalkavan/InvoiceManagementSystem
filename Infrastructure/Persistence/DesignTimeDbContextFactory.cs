@@ -4,13 +4,13 @@ using Persistence.Context;
 
 namespace Persistence;
 
-public class DesignTimeDbContextFactory:IDesignTimeDbContextFactory<ApplicationDbContext>
+public class DesignTimeDbContextFactory:IDesignTimeDbContextFactory<AppDbContext>
 {
-    public ApplicationDbContext CreateDbContext(string[] args)
+    public AppDbContext CreateDbContext(string[] args)
     {
-        var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+        var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
         optionsBuilder.UseSqlServer(Configuration.GetConnectionString);
 
-        return new ApplicationDbContext(optionsBuilder.Options);
+        return new AppDbContext(optionsBuilder.Options);
     }
 }
