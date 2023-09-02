@@ -1,14 +1,15 @@
+using Application;
 using Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
-var configuration = builder.Configuration;
 
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddPersistenceServices(configuration);
+builder.Services.AddApplicationServices();
+builder.Services.AddPersistenceServices();
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
