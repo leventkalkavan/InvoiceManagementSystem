@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Application.Features.Commands.AppUser.CreateUser;
+using Application.Features.Commands.AppUser.DeleteUser;
+using Application.Features.Commands.AppUser.UpdateUser;
+using Application.Features.Commands.House;
 using Application.Features.Queries.AppUser.GetUsers;
 using Application.Repositories.House;
 using Domain.Entities;
@@ -14,7 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class AdminController : ControllerBase
     {
@@ -37,8 +40,29 @@ namespace WebAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateUser(CreateUserCommandRequest createUserCommandRequest)
         {
-            var res = await _mediator.Send(createUserCommandRequest);
-            return Ok(res);
+            var req = await _mediator.Send(createUserCommandRequest);
+            return Ok(req);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateUser(UpdateUserCommandRequest updateUserCommandRequest)
+        {
+            var req = await _mediator.Send(updateUserCommandRequest);
+            return Ok(req);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteUser([FromQuery]DeleteUserCommandRequest deleteUserCommandRequest)
+        {
+            var req = await _mediator.Send(deleteUserCommandRequest);
+            return Ok(req);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateHouse(CreateHouseCommandRequest createHouseCommandRequest)
+        {
+            var req = await _mediator.Send(createHouseCommandRequest);
+            return Ok(req);
         }
     }
 }

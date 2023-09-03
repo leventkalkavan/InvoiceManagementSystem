@@ -1,17 +1,15 @@
-using System.ComponentModel.DataAnnotations;
-using Domain.Entities.Authentication;
-using Domain.Entities.Common;
+using System.ComponentModel.DataAnnotations.Schema;
+using Domain.Entities;
 
-namespace Domain.Entities;
+namespace Application.DTOs.UserDtos;
 
-public class House: BaseEntity
+public class HouseDto
 {
+    public Guid Id { get; set; }
     public bool Status { get; set; }
     public string Type { get; set; }
     public string Block { get; set; }
     public int ApartmentNumber { get; set; }
     public int Floor { get; set; }
-
     public string AppUserId { get; set; }
-    public AppUser AppUser { get; set; }
 }

@@ -27,8 +27,7 @@ public class CreateUserCommandHandler: IRequestHandler<CreateUserCommandRequest,
         });
         return new CreateUserCommandResponse
         {
-            IsSuccess = res.IsSuccess,
-            Message = res.Message
+            IsSuccess = res.IsSuccess
         };
     }
 }

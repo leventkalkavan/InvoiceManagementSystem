@@ -22,7 +22,12 @@ public class GetUserQueryHandler: IRequestHandler<GetUserQueryRequest,GetUserQue
             Users = users.Select(user => new UserDto
             {
                 Id = user.Id,
-                Email = user.Email
+                Username = user.UserName,
+                TC = user.TC,
+                Email = user.Email,
+                CreditCardBalance = user.CreditCardBalance,
+                PhoneNumber = user.PhoneNumber,
+                CarPlate = user.CarPlate
             }).ToList()
         };
 
