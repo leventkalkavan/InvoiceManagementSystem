@@ -1,10 +1,10 @@
 using Application;
+using Newtonsoft.Json;
 using Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
-
+builder.Services.AddControllers().AddNewtonsoftJson(opt=>opt.SerializerSettings.ReferenceLoopHandling=ReferenceLoopHandling.Ignore);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

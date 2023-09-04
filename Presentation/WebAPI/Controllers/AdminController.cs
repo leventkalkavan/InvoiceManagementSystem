@@ -6,6 +6,9 @@ using Application.Features.Commands.AppUser.CreateUser;
 using Application.Features.Commands.AppUser.DeleteUser;
 using Application.Features.Commands.AppUser.UpdateUser;
 using Application.Features.Commands.House;
+using Application.Features.Commands.House.DeleteHouse;
+using Application.Features.Commands.House.UpdateHouse;
+using Application.Features.Commands.Invoice.CreateInvoice;
 using Application.Features.Queries.AppUser.GetUsers;
 using Application.Repositories.House;
 using Domain.Entities;
@@ -28,6 +31,8 @@ namespace WebAPI.Controllers
         {
             _mediator = mediator;
         }
+        
+        //UserController
 
         [HttpGet]
         public async Task<ActionResult<GetUserQueryResponse>> GetAllUsers()
@@ -51,17 +56,42 @@ namespace WebAPI.Controllers
             return Ok(req);
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteUser([FromQuery]DeleteUserCommandRequest deleteUserCommandRequest)
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> DeleteUser([FromRoute]DeleteUserCommandRequest deleteUserCommandRequest)
         {
             var req = await _mediator.Send(deleteUserCommandRequest);
             return Ok(req);
         }
+        
+        //HouseController
 
         [HttpPost]
         public async Task<IActionResult> CreateHouse(CreateHouseCommandRequest createHouseCommandRequest)
         {
             var req = await _mediator.Send(createHouseCommandRequest);
+            return Ok(req);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateHouse(UpdateHouseCommandRequest updateHouseCommandRequest)
+        {
+            var req = await _mediator.Send(updateHouseCommandRequest);
+            return Ok(req);
+        }
+
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> DeleteHouse([FromRoute] DeleteHouseCommandRequest deleteHouseCommandRequest)
+        {
+            var req = await _mediator.Send(deleteHouseCommandRequest);
+            return Ok(req);
+        }
+        
+        //InvoiceController
+
+        [HttpPost]
+        public async Task<IActionResult> CreateInvoice(CreateInvoiceCommandRequest createInvoiceCommandRequest)
+        {
+            var req = await _mediator.Send(createInvoiceCommandRequest);
             return Ok(req);
         }
     }

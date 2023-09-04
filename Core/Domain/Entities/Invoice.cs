@@ -9,11 +9,15 @@ namespace Domain.Entities;
 public class Invoice: BaseEntity
 {
     public string Name { get; set; }
+    
     [Column(TypeName = "decimal(18, 2)")]
     public decimal? Bill { get; set; }
-    public bool Status { get; set; }
-    public DateTime LastDate { get; set; }
-
-    public string AppUserId { get; set; }
-    public AppUser AppUser { get; set; }
+    
+    public bool IsPaid { get; set; }
+    public DateTime CreatedDate { get; set; }
+    
+    [DataType(DataType.Date)]
+    public DateTime LastPaymentDate { get; set; }
+    public string HouseId { get; set; }
+    public House House { get; set; }
 }

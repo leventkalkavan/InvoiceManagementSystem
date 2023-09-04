@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class addedEntity2 : Migration
+    public partial class updatedEntity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -163,7 +163,7 @@ namespace Persistence.Migrations
                 name: "Houses",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Block = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -186,12 +186,14 @@ namespace Persistence.Migrations
                 name: "Invoices",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Bill = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    Status = table.Column<bool>(type: "bit", nullable: false),
-                    LastDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    IsPaid = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastPaymentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    HouseId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -200,8 +202,12 @@ namespace Persistence.Migrations
                         name: "FK_Invoices_AspNetUsers_AppUserId",
                         column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Invoices_Houses_HouseId",
+                        column: x => x.HouseId,
+                        principalTable: "Houses",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -252,6 +258,11 @@ namespace Persistence.Migrations
                 name: "IX_Invoices_AppUserId",
                 table: "Invoices",
                 column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Invoices_HouseId",
+                table: "Invoices",
+                column: "HouseId");
         }
 
         /// <inheritdoc />
@@ -273,13 +284,13 @@ namespace Persistence.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Houses");
-
-            migrationBuilder.DropTable(
                 name: "Invoices");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Houses");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

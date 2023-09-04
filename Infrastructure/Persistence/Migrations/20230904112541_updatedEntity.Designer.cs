@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence.Context;
 
@@ -11,9 +12,11 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230904112541_updatedEntity")]
+    partial class updatedEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +24,6 @@ namespace Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("AppUserHouse", b =>
-                {
-                    b.Property<string>("AppUsersId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("HousesId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("AppUsersId", "HousesId");
-
-                    b.HasIndex("HousesId");
-
-                    b.ToTable("AppUserHouse");
-                });
 
             modelBuilder.Entity("Domain.Entities.Authentication.AppUser", b =>
                 {
@@ -123,7 +111,7 @@ namespace Persistence.Migrations
 
                     b.Property<string>("AppUserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Block")
                         .IsRequired()
@@ -140,6 +128,8 @@ namespace Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("Houses");
                 });
@@ -160,7 +150,6 @@ namespace Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("HouseId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsPaid")
@@ -315,19 +304,15 @@ namespace Persistence.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("AppUserHouse", b =>
+            modelBuilder.Entity("Domain.Entities.House", b =>
                 {
-                    b.HasOne("Domain.Entities.Authentication.AppUser", null)
-                        .WithMany()
-                        .HasForeignKey("AppUsersId")
+                    b.HasOne("Domain.Entities.Authentication.AppUser", "AppUser")
+                        .WithMany("Houses")
+                        .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.House", null)
-                        .WithMany()
-                        .HasForeignKey("HousesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("Domain.Entities.Invoice", b =>
@@ -336,13 +321,9 @@ namespace Persistence.Migrations
                         .WithMany("Invoices")
                         .HasForeignKey("AppUserId");
 
-                    b.HasOne("Domain.Entities.House", "House")
+                    b.HasOne("Domain.Entities.House", null)
                         .WithMany("Invoices")
-                        .HasForeignKey("HouseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("House");
+                        .HasForeignKey("HouseId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -398,6 +379,8 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Authentication.AppUser", b =>
                 {
+                    b.Navigation("Houses");
+
                     b.Navigation("Invoices");
                 });
 

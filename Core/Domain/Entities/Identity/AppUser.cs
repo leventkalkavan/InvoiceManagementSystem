@@ -11,6 +11,5 @@ public class AppUser: IdentityUser
     public string? CarPlate { get; set; }
 
     public ICollection<Invoice> Invoices { get; set; }
-
     public ICollection<House> Houses { get; set; }
 }

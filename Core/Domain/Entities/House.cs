@@ -13,5 +13,6 @@ public class House: BaseEntity
     public int Floor { get; set; }
 
     public string AppUserId { get; set; }
-    public AppUser AppUser { get; set; }
+    public ICollection<AppUser> AppUsers { get; set; }
+    public ICollection<Invoice> Invoices { get; set; }
 }

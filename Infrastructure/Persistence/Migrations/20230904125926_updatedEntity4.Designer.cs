@@ -12,8 +12,8 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230903130241_addedEntity2")]
-    partial class addedEntity2
+    [Migration("20230904125926_updatedEntity4")]
+    partial class updatedEntity4
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -102,9 +102,9 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.House", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("ApartmentNumber")
                         .HasColumnType("int");
@@ -136,30 +136,38 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Invoice", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("AppUserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<decimal?>("Bill")
                         .HasColumnType("decimal(18, 2)");
 
-                    b.Property<DateTime>("LastDate")
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("HouseId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsPaid")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastPaymentDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AppUserId");
+
+                    b.HasIndex("HouseId");
 
                     b.ToTable("Invoices");
                 });
@@ -310,13 +318,15 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Invoice", b =>
                 {
-                    b.HasOne("Domain.Entities.Authentication.AppUser", "AppUser")
+                    b.HasOne("Domain.Entities.Authentication.AppUser", null)
                         .WithMany("Invoices")
-                        .HasForeignKey("AppUserId")
+                        .HasForeignKey("AppUserId");
+
+                    b.HasOne("Domain.Entities.House", null)
+                        .WithMany("Invoices")
+                        .HasForeignKey("HouseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -374,6 +384,11 @@ namespace Persistence.Migrations
                 {
                     b.Navigation("Houses");
 
+                    b.Navigation("Invoices");
+                });
+
+            modelBuilder.Entity("Domain.Entities.House", b =>
+                {
                     b.Navigation("Invoices");
                 });
 #pragma warning restore 612, 618
