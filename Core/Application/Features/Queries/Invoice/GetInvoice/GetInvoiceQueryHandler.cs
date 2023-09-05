@@ -28,7 +28,7 @@ public class GetInvoiceQueryHandler: IRequestHandler<GetInvoiceQueryRequest,GetI
                 Id = invoice.Id,
                 Name = invoice.Name,
                 Bill = invoice.Bill.ToString(),
-                IsPaid = !invoice.IsPaid,
+                IsPaid = invoice.IsPaid,
                 CreatedDate = invoice.CreatedDate,
                 LastPaymentDate = invoice.LastPaymentDate
             }).ToList()

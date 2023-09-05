@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Application.Features.Commands.Invoice.PayingInvoice;
 using Application.Features.Queries.House;
 using Application.Features.Queries.Invoice;
 using Application.Features.Queries.Invoice.GetByIdInvoice;
@@ -34,6 +35,13 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> GetInvoiceById([FromRoute] GetByIdInvoiceQueryRequest getByIdInvoiceQueryRequest)
         {
             var req = await _mediator.Send(getByIdInvoiceQueryRequest);
+            return Ok(req);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PayInvoice([FromQuery]PayingInvoiceCommandRequest payingInvoiceCommandRequest)
+        {
+            var req = await _mediator.Send(payingInvoiceCommandRequest);
             return Ok(req);
         }
     }
