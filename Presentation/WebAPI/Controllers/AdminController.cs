@@ -9,7 +9,9 @@ using Application.Features.Commands.House;
 using Application.Features.Commands.House.DeleteHouse;
 using Application.Features.Commands.House.UpdateHouse;
 using Application.Features.Commands.Invoice.CreateInvoice;
+using Application.Features.Commands.Invoice.DeleteInvoice;
 using Application.Features.Queries.AppUser.GetUsers;
+using Application.Features.Queries.Invoice;
 using Application.Repositories.House;
 using Domain.Entities;
 using Domain.Entities.Authentication;
@@ -92,6 +94,21 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> CreateInvoice(CreateInvoiceCommandRequest createInvoiceCommandRequest)
         {
             var req = await _mediator.Send(createInvoiceCommandRequest);
+            return Ok(req);
+        }
+        
+        [HttpGet]
+        public async Task<ActionResult<GetInvoiceQueryResponse>> GetAllInvoice()
+        {
+            var query = new GetInvoiceQueryRequest();
+            var req = await _mediator.Send(query);
+            return Ok(req);
+        }
+
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> DeleteInvoice([FromRoute]DeleteInvoiceCommandRequest deleteInvoiceCommandRequest)
+        {
+            var req = await _mediator.Send(deleteInvoiceCommandRequest);
             return Ok(req);
         }
     }

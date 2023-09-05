@@ -4,7 +4,9 @@ using Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//A Possible Object Cycle Was Detected Which Is Not Supported hatasinin cozumu
 builder.Services.AddControllers().AddNewtonsoftJson(opt=>opt.SerializerSettings.ReferenceLoopHandling=ReferenceLoopHandling.Ignore);
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
