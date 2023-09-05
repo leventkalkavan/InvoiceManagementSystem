@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.Context;
 
-public class AppDbContext: IdentityDbContext<AppUser>
+public class AppDbContext: IdentityDbContext<AppUser,AppRole,string>
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
     

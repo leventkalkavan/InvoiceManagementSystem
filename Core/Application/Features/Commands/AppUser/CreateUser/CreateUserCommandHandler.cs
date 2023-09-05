@@ -17,6 +17,7 @@ public class CreateUserCommandHandler: IRequestHandler<CreateUserCommandRequest,
     {
         var res = await _userService.CreateAsync(new CreateUserDto
         {
+            //Mail ya da şifreden ikisinden birini iki farklı kullanıcdan eklemek istersen hata veriyor HASSAS AYARLARA DİKKAT
             TC = request.TC,
             Username = request.Username,
             CreditCardBalance = request.CreditCardBalance,

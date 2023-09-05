@@ -25,7 +25,7 @@ public static class ServiceRegistation
             opt.UseSqlServer(Configuration.GetConnectionString);
         });
 
-        services.AddIdentity<AppUser, IdentityRole>(options =>
+        services.AddIdentity<AppUser,AppRole>(options =>
         {
             options.User.RequireUniqueEmail = true;
         }).AddEntityFrameworkStores<AppDbContext>();
