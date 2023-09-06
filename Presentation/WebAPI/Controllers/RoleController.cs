@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Application.DTOs.RoleDto;
 using Application.Features.Commands.Role;
 using Application.Features.Commands.Role.AssigningRole;
+using Application.Features.Queries.AppRole;
 using Domain.Entities.Authentication;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -22,6 +23,14 @@ namespace WebAPI.Controllers
         public RoleController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+        
+        [HttpGet]
+        public async Task<ActionResult<AppRoleQueryResponse>> GetAllRole()
+        {
+            var query = new AppRoleQueryRequest();
+            var req = await _mediator.Send(query);
+            return Ok(req);
         }
 
         [HttpPost]
