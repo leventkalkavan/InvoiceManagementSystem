@@ -1,4 +1,5 @@
 using Application.Abstractions.Services;
+using Application.Abstractions.Token;
 using Application.Repositories.House;
 using Application.Repositories.Invoice;
 using Domain.Entities;
@@ -35,5 +36,7 @@ public static class ServiceRegistation
         services.AddScoped<IHouseWriterRepository, HouseWriteRepository>();
         services.AddScoped<IHouseReadRepository, HouseReadRepository>();
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<ITokenHandler, TokenHandler>();
     }
 }

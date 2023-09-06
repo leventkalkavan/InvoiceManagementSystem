@@ -7,9 +7,9 @@ namespace Application.Features.Commands.Role.AssigningRole;
 public class AssigningRoleCommandHandler: IRequestHandler<AssigningRoleCommandRequest,AssigningRoleCommandResponse>
 {
     private readonly UserManager<Domain.Entities.Authentication.AppUser> _userManager;
-    private readonly RoleManager<AppRole> _roleManager;
+    private readonly RoleManager<Domain.Entities.Authentication.AppRole> _roleManager;
 
-    public AssigningRoleCommandHandler(UserManager<Domain.Entities.Authentication.AppUser> userManager, RoleManager<AppRole> roleManager)
+    public AssigningRoleCommandHandler(UserManager<Domain.Entities.Authentication.AppUser> userManager, RoleManager<Domain.Entities.Authentication.AppRole> roleManager)
     {
         _userManager = userManager;
         _roleManager = roleManager;

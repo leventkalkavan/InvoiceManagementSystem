@@ -6,16 +6,16 @@ namespace Application.Features.Commands.Role;
 
 public class CreateRoleCommandHandler: IRequestHandler<CreateRoleCommandRequest,CreateRoleCommandResponse>
 {
-    private readonly RoleManager<AppRole> _roleManager;
+    private readonly RoleManager<Domain.Entities.Authentication.AppRole> _roleManager;
 
-    public CreateRoleCommandHandler(RoleManager<AppRole> roleManager)
+    public CreateRoleCommandHandler(RoleManager<Domain.Entities.Authentication.AppRole> roleManager)
     {
         _roleManager = roleManager;
     }
 
     public async Task<CreateRoleCommandResponse> Handle(CreateRoleCommandRequest request, CancellationToken cancellationToken)
     {
-        IdentityResult result = await _roleManager.CreateAsync(new AppRole { Name = request.Name, CreatedDate = DateTime.Now });
+        IdentityResult result = await _roleManager.CreateAsync(new Domain.Entities.Authentication.AppRole { Name = request.Name, CreatedDate = DateTime.Now });
         if (result.Succeeded)
         {
             return new CreateRoleCommandResponse

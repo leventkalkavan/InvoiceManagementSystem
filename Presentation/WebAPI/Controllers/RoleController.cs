@@ -8,6 +8,7 @@ using Application.Features.Commands.Role.AssigningRole;
 using Application.Features.Queries.AppRole;
 using Domain.Entities.Authentication;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

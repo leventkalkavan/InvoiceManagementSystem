@@ -16,12 +16,14 @@ using Application.Repositories.House;
 using Domain.Entities;
 using Domain.Entities.Authentication;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
+    [Authorize(AuthenticationSchemes = "Admin")]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class AdminController : ControllerBase
