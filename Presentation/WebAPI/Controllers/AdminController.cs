@@ -23,6 +23,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
+    //Kullanici eklemek icin ya user nullsa user ekle diye program.csye yazacaksiniz ya da auth devre disi birakacaksiniz 
     [Authorize(AuthenticationSchemes = "Admin")]
     [Route("api/[controller]/[action]")]
     [ApiController]
